@@ -305,7 +305,7 @@
                         "recordTypes": "[parameters('recordTypes')]",
                         "workspaceID": "[parameters('workspaceID')]",
                         "workspaceKey": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('LogAnalyticsWorkspaceKey')).secretUriWithVersion, ')')]",
-                        "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/Azure/Azure-Sentinel/blob/master/DataConnectors/O365%20Data/IngestOffice365Data?raw=true",
+                        "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/sreedharande/IngestOffice365AuditLogs/blob/main/IngestOffice365Data.zip?raw=true",
                         "customLogName": "[parameters('customLogName')]",
 						"LAUri":"[variables('LogAnaltyicsUri')]",
 						"AzureAADLoginUri":"[variables('AzureAADLoginUri')]",

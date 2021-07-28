@@ -34,16 +34,11 @@ Let’s get started with the configuration!
 
 ### Preparation 
 The following tasks describe the necessary preparation and configurations steps. 
-- Onboard Azure Sentinel 
 - Register an application in Azure AD 
 - Create an Office 365 Management Activity API Subscription 
 - Deploy the Azure Function App 
 - Post Configuration Steps for the Function App and Key Vault 
 - How to Use the Activity Logs in Azure Sentinel 
-
-## Onboarding Azure Sentinel 
-
-Onboarding Azure Sentinel is not part of this document post. However, required guidance can be found [here](https://docs.microsoft.com/azure/sentinel/quickstart-onboard). 
 
 ### Register an application in Azure AD 
 The Azure AD app is later required to use it as service principle for the [Azure Funtion App](https://github.com/Azure/Azure-Sentinel/tree/master/DataConnectors/O365%20Data) app. 
@@ -68,7 +63,7 @@ The Azure AD app is later required to use it as service principle for the [Azure
 14. Copy the **client Id** from the application properties and paste it somewhere.
 15. Also copy the **tenant Id** from the AAD directory properties blade.
 
-For the deployment of [Azure Funtion App](https://github.com/Azure/Azure-Sentinel/tree/master/DataConnectors/O365%20Data), make a note of following settings: 
+For the deployment of [Azure Funtion App](https://github.com/sreedharande/IngestOffice365AuditLogs), make a note of following settings: 
 - The Azure AD Application ID 
 - The Azure AD Application Secret 
 - The Tenant ID 
@@ -81,10 +76,10 @@ After successfully creating the service principles, run the following PowerShell
 ```powerhshell
 $ClientID = "<GUID> from AAD App Registration"
 $ClientSecret = "<clientSecret> from AAD App Registrtion"
-$loginURL = "https://login.microsoftonline.com/"
-$tenantdomain = "<domain>.onmicrosoft.com"
+$loginURL = "https://login.microsoftonline.[com][us]/"
+$tenantdomain = "<domain>.onmicrosoft.[com][us]"
 $TenantGUID = "<tenantguid> from AAD"
-$resource = "https://manage.office.com"
+$resource = "https://manage.office.[com][us]"
 $body = @{grant_type="client_credentials";resource=$resource;client_id=$ClientID;client_secret=$ClientSecret}
 $oauth = Invoke-RestMethod -Method Post -Uri $loginURL/$tenantdomain/oauth2/token?api-version=1.0 -Body $body
 $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"} 
@@ -92,20 +87,22 @@ $publisher = "<randomGuid>" Get a guid from https://guidgenerator.com/
 ```
 3. Run this command to enable **Audit.General** Subscription. 
 ```powershell
-Invoke-WebRequest -Method Post -Headers $headerParams -Uri "https://manage.office.com/api/v1.0/$tenantGuid/activity/feed/subscriptions/start?contentType=Audit.General&PublisherIdentifier=$Publisher"
+Invoke-WebRequest -Method Post -Headers $headerParams -Uri "https://manage.office.[com][us]/api/v1.0/$tenantGuid/activity/feed/subscriptions/start?contentType=Audit.General&PublisherIdentifier=$Publisher"
 ```
 4. Run this command to enable **DLP.ALL** subscription
 ```powershell
-Invoke-WebRequest -Method Post -Headers $headerParams -Uri "https://manage.office.com/api/v1.0/$tenantGuid/activity/feed/subscriptions/start?contentType=DLP.ALL&PublisherIdentifier=$Publisher"
+Invoke-WebRequest -Method Post -Headers $headerParams -Uri "https://manage.office.[com][us]/api/v1.0/$tenantGuid/activity/feed/subscriptions/start?contentType=DLP.ALL&PublisherIdentifier=$Publisher"
 ```
 5. A successful output looks like as below. <br>
 ![Output](./images/Picture7.png)<br>
 
 ### Deploy the Azure Function App 
-Thanks to the published ARM template the deployment of the [Azure Funtion App](https://github.com/Azure/Azure-Sentinel/tree/master/DataConnectors/O365%20Data) is done with just a few clicks. 
+Thanks to the published ARM template the deployment of the [Azure Funtion App](https://github.com/sreedharande/IngestOffice365AuditLogs) is done with just a few clicks. 
 1. Click to **Deploy the template / Deploy to Azure** below.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FAzure-Sentinel%2Fmaster%2FDataConnectors%2FO365%20Data%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreedharande%2FIngestOffice365AuditLogs%2Fmain%2Fazuredeploy.json)
+
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreedharande%2FIngestOffice365AuditLogs%2Fmain%2Fazuredeploy.json)
 
 2. Now it is time to use the noted details from previous steps.  
 - Select the right **Subscription**, **Resource Group** and **Region** where you what to deploy the Azure Funtion App.  
