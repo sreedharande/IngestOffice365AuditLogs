@@ -84,7 +84,7 @@
 			"StorageSuffix":"[environment().suffixes.storage]",
 			"LogAnaltyicsUri":"[replace(environment().portal, 'https://portal', concat('https://', toLower(parameters('workspaceId')), '.ods.opinsights'))]",
 			"OfficeLoginUri":"[replace(environment().portal, 'https://portal.azure', 'https://manage.office')]",
-			"AzureAADLoginUri":"[environment().portal, 'https://portal.azure', 'https://login.microsoftonline')]"
+			"AzureAADLoginUri":"[replace(environment().portal, 'https://portal.azure', 'https://login.microsoftonline')]"
     },
     "resources": [
         {
