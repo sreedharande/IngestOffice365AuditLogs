@@ -239,8 +239,11 @@ function Get-O365Data{
     $contentTypes = $Office365ContentTypes.split(",")
     #Loop for each content Type like Audit.General
     foreach($contentType in $contentTypes){
-        $listAvailableContentUri = "$OfficeResourceUrl/api/v1.0/$tenantGUID/activity/feed/subscriptions/content?contentType=$contentType&PublisherIdentifier=$AADAppPublisher&startTime=$startTime&endTime=$endTime"
-        do {
+        $listAvailableContentUri = "$OfficeLoginUri/api/v1.0/$tenantGUID/activity/feed/subscriptions/content?contentType=$contentType&PublisherIdentifier=$AADAppPublisher&startTime=$startTime&endTime=$endTime"
+        Write-Host "***************************************"
+		Write-Host $listAvailableContentUri
+		
+		do {
             #List Available Content
             $contentResult = Invoke-RestMethod -Method GET -Headers $headerParams -Uri $listAvailableContentUri
             $contentResult.Count
