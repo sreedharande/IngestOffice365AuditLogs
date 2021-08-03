@@ -82,7 +82,7 @@
 			"AzureAADClientSecret": "AzureAADClientSecret",    
 			"LogAnalyticsWorkspaceKey": "LogAnalyticsWorkspaceKey",
 			"StorageSuffix":"[environment().suffixes.storage]",
-			"HostingPlanName":"[concat('ASP-',substring(variables('FunctionName'), 0, 22))]",																	   
+			"HostingPlanName":"[concat('ASP-',substring(variables('FunctionName'), 0, 20))]",																	   
 			"LogAnaltyicsUri":"[replace(environment().portal, 'https://portal', concat('https://', toLower(parameters('workspaceId')), '.ods.opinsights'))]",
 			"OfficeLoginUri":"[replace(environment().portal, 'https://portal.azure', 'https://manage.office')]",
 			"AzureAADLoginUri":"[replace(environment().portal, 'https://portal.azure', 'https://login.microsoftonline')]"
