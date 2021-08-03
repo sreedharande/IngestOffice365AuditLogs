@@ -262,7 +262,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]",
-                "[resourceId('Microsoft.Web/serverfarms', variables('FunctionName'))]",                
+                "[resourceId('Microsoft.Web/serverfarms', variables('HostingPlanName'))]",                
                 "[resourceId('Microsoft.Insights/components', variables('FunctionName'))]"
             ],
             "kind": "functionapp",
@@ -271,7 +271,7 @@
             },
             "properties": {
                 "name": "[variables('FunctionName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('FunctionName'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('HostingPlanName'))]",
                 "httpsOnly": true,
                 "clientAffinityEnabled": true,
 				"alwaysOn": true,
