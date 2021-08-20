@@ -237,7 +237,14 @@ function Get-O365Data{
     )
     #List Available Content
     $contentTypes = $Office365ContentTypes.split(",")
-    #Loop for each content Type like Audit.General
+    #Loop for each content Type like Audit.General;
+	
+	#API front end for GCC-High is “manage.office365.us” instead of the commercial “manage.office.com”. 
+	if ($OfficeLoginUri.split('.')[2] -eq "us") {
+		$OfficeLoginUri = "https://manage.office365.us"
+	}
+	
+	#Loop for each content Type like Audit.General; DLP.ALL
     foreach($contentType in $contentTypes){
         $listAvailableContentUri = "$OfficeLoginUri/api/v1.0/$tenantGUID/activity/feed/subscriptions/content?contentType=$contentType&PublisherIdentifier=$AADAppPublisher&startTime=$startTime&endTime=$endTime"
         Write-Host "***************************************"
