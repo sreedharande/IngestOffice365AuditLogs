@@ -270,8 +270,7 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "name": "[variables('FunctionName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('HostingPlanName'))]",
+                "name": "[variables('FunctionName')]",                
                 "httpsOnly": true,
                 "clientAffinityEnabled": true,
 				"alwaysOn": true,

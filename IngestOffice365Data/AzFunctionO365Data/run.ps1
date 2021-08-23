@@ -22,7 +22,7 @@ if ($env:MSI_SECRET -and (Get-Module -ListAvailable Az.Accounts)){
 $Office365ContentTypes = $env:contentTypes
 $Office365RecordTypes = $env:recordTypes
 $Office365CustomLog = $env:customLogName
-$LAWorkspaceId = $env:workspaceId
+$LAWorkspaceId = $env:workspaceID
 $LAWorkspaceKey = $env:workspaceKey
 $AADAppClientId = $env:clientID 
 $AADAppClientSecret = $env:clientSecret 
