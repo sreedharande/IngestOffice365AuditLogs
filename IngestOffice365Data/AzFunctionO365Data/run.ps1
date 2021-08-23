@@ -165,7 +165,8 @@ function Write-OMSLogfile {
         Write-Verbose -Message $logMessage
 
         #Submit the data
-        $returnCode = Post-LogAnalyticsData -CustomerID $CustomerID -SharedKey $SharedKey -Body ([System.Text.Encoding]::UTF8.GetBytes($logMessage)) -Type $type
+        #$returnCode = Post-LogAnalyticsData -CustomerID $CustomerID -SharedKey $SharedKey -Body ([System.Text.Encoding]::UTF8.GetBytes($logMessage)) -Type $type
+        $returnCode = Post-LogAnalyticsData -CustomerID $CustomerID -SharedKey $SharedKey -Body $logMessage -Type $type
         Write-Verbose -Message "Post Statement Return Code $returnCode"
         return $returnCode
     }
