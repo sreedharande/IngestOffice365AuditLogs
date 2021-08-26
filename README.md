@@ -109,10 +109,10 @@ Thanks to the published ARM template the deployment of the [Azure Funtion App](h
 - Fill the Instance Details **Client ID**, **Client Secret**, **Tenant Domain**, **Publisher Guid**.  
 - There is also a need of **Workspace ID** and **Workspace Key** from where Azure Sentinel is deployed. 
 - The Content Types you can leave as default with **Audit.General**, or you can also add **DLP.All** as well. Or use only **DLP.All**. 
-![Deployment](./images/picture9.png)
+![Deployment](./images/Picture9.png)
 3. Click to **Review + create**, review the configuration and click **Create**. 
 4. Now the deployment of ARM template is completed. 
-![Complete](./images/picture10.png)
+![Complete](./images/Picture10.png)
 
 ## How to use the Activity Logs in Azure Sentinel 
 Once the Azure Function App is functional you can query the General.Audit and DLP.All activity logs. The activity will reside in a Custom Table as configured in the Azure Function App above. The following table includes sample Kusto Language Queries (KQL).  You can see these are using the Custom Logs (Custom log tables always end in “_CL”) and the values we mentioned earlier.<br>
