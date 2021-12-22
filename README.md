@@ -23,7 +23,7 @@ Specifically, Audit.General activity logs could be of interest in SIEM if there 
   - Phishing and malware alerts for files in SharePoint Online, OneDrive for Business, and Microsoft Teams  
   - Usage of Phishing and malware events 
 
-This document covers the required steps to ingest Audit.General and DLP.All activity logs from the Office 365 Management Activity API into Azure Sentinel and how to use the ingested alerts. For the ingestion of activity logs I will use an Azure Function App connector. The Azure Function App is published [here](https://github.com/Azure/Azure-Sentinel/tree/master/DataConnectors/O365%20Data). 
+This document covers the required steps to ingest Audit.General and DLP.All activity logs from the Office 365 Management Activity API into Azure Sentinel and how to use the ingested alerts. For the ingestion of activity logs I will use an Azure Function App connector. 
 
 
 The Azure Function App uses a PowerShell script to collect Office 365 Audit.General and DLP.All Activity logs and ingests into a custom table in Azure Sentinel (custom tables end with _CL when created in Log Analytics). The secrets for the required connections are stored in Azure Key Vault. 
