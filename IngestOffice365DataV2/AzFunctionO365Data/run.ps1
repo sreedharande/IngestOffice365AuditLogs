@@ -312,7 +312,7 @@ $storageAccountContext = New-AzStorageContext -ConnectionString $azstoragestring
 
 $StorageTable = Get-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext -ErrorAction Ignore
 if($null -eq $StorageTable.Name){  
-    $startTime = $currentUTCtime.AddHours(-24) | Get-Date -Format yyyy-MM-ddThh:mm:ss
+    $startTime = $currentUTCtime.AddHours(-23) | Get-Date -Format yyyy-MM-ddThh:mm:ss
 	New-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext
     $o365TimeStampTbl = (Get-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext.Context).cloudTable    
     Add-AzTableRow -table $o365TimeStampTbl -PartitionKey "Office365" -RowKey "lastExecutionEndTime" -property @{"lastExecutionEndTimeValue"=$startTime} -UpdateExisting
