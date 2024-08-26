@@ -303,6 +303,10 @@ function Get-O365Data{
 			}
         } until ($nextPage -eq $false)
     }
+
+	#add last run time to ensure no missed packages
+	$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddThh:mm:ss
+	Add-AzTableRow -table $o365TimeStampTbl -PartitionKey "Office365" -RowKey "lastExecutionEndTime" -property @{"lastExecutionEndTimeValue"=$endTime} -UpdateExisting
 }
 
 
