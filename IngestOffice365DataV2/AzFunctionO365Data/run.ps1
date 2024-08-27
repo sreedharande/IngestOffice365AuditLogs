@@ -305,18 +305,15 @@ function Get-O365Data{
     }
 
 	#add last run time to ensure no missed packages
-	$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddThh:mm:ss
+	$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddTHH:mm:ss
 	Add-AzTableRow -table $o365TimeStampTbl -PartitionKey "Office365" -RowKey "lastExecutionEndTime" -property @{"lastExecutionEndTimeValue"=$endTime} -UpdateExisting
 }
 
-
-#add last run time to blob file to ensure no missed packages
-$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddThh:mm:ss
 $storageAccountContext = New-AzStorageContext -ConnectionString $azstoragestring
-
 $StorageTable = Get-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext -ErrorAction Ignore
-if($null -eq $StorageTable.Name){  
-    $startTime = $currentUTCtime.AddHours(-23) | Get-Date -Format yyyy-MM-ddThh:mm:ss
+
+if($null -eq $StorageTable.Name){      
+	$startTime = $currentUTCtime.AddSeconds(-300) | Get-Date -Format yyyy-MM-ddTHH:mm:ss
 	New-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext
     $o365TimeStampTbl = (Get-AzStorageTable -Name $storageAccountTableName -Context $storageAccountContext.Context).cloudTable    
     Add-AzTableRow -table $o365TimeStampTbl -PartitionKey "Office365" -RowKey "lastExecutionEndTime" -property @{"lastExecutionEndTimeValue"=$startTime} -UpdateExisting
@@ -327,8 +324,9 @@ Else {
 # retrieve the last execution values
 $lastExecutionEndTime = Get-azTableRow -table $o365TimeStampTbl -partitionKey "Office365" -RowKey "lastExecutionEndTime" -ErrorAction Ignore
 
-$startTime = $($lastExecutionEndTime.lastExecutionEndTimeValue)
-$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddThh:mm:ss
+$lastlogTime = $($lastExecutionEndTime.lastExecutionEndTimeValue)
+$startTime = $lastlogTime | Get-Date -Format yyyy-MM-ddTHH:mm:ss
+$endTime = $currentUTCtime | Get-Date -Format yyyy-MM-ddTHH:mm:ss
 
 $headerParams = Get-AuthToken $AADAppClientId $AADAppClientSecret $AADAppClientDomain $AzureTenantId
 Get-O365Data $startTime $endTime $headerParams $AzureTenantId
